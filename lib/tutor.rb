@@ -6,6 +6,8 @@ class Game
     self.user_input    = attributes[:user_input]    || UserInput.new([])
   end
 
+  # TODO: can we get rid of this?
+  # it's not mutating, but it wishes it was
   def user_enters(character)
     Game.new target_string: target_string,
              user_input:    user_input.push(character)
@@ -27,6 +29,22 @@ class UserInput
 
   private
   attr_accessor :characters
+end
+
+# UNTESTED
+require 'time'
+class Timer
+  def start
+    @start_time = Time.now
+  end
+
+  def stop
+    @stop_time = Time.now
+  end
+
+  def time_taken
+    (@stop_time - @start_time).to_f
+  end
 end
 
 class MockTimer
@@ -59,6 +77,7 @@ class GameStats
     target_size == actual_size
   end
 
+  # TODO: rename this to seconds_taken
   def time_taken
     timer.time_taken
   end
@@ -68,7 +87,7 @@ class GameStats
   end
 
   def num_errors
-    0 # probably need a real algorithm for this like... uhm, markov distane I think its called? (no internet right now to look it up)
+    0 # TODO: probably need a real algorithm for this like... uhm, markov distane I think its called? (no internet right now to look it up)
   end
 
   private

@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+# THIS IS ALL UNTESTED
+$LOAD_PATH.unshift File.expand_path '../../lib', __FILE__
+
+require 'interpret_character'
+require 'tutor'
+
+system "stty raw"
+
+game = Game.new target_string: 'abc def'
+timer = Timer.new
+
+timer.start
+game_stats = nil
+
+loop do
+  game_stats = GameStats.new game: game, timer: timer
+  break if game_stats.over?
+  raw_char   = InterpretCharacter.call($stdin.getc)
+  character  = Character.new *raw_char
+  game       = game.user_enters character
+end
+
+timer.stop
+
+system "stty -raw"
+
+puts "Game Stats"
+puts "=========="
+puts "time taken:            #{game_stats.time_taken.inspect}"
+puts "characters per second: #{game_stats.cps}"
+puts "num errors:            #{game_stats.num_errors}"
