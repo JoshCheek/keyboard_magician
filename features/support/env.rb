@@ -45,7 +45,7 @@ end
 
 And 'it took me $time to play the game' do |raw_time|
   # currently expect raw_time to be a string like 5s
-  expect(game_stats.time_taken).to eq raw_time.to_f
+  expect(game_stats.seconds_taken).to eq raw_time.to_f
 end
 
 And 'my cps is $cps' do |cps|

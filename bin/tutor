@@ -34,6 +34,6 @@ end
 
 puts "Game Stats"
 puts "=========="
-puts "time taken:            #{game_stats.time_taken.inspect}"
+puts "time taken:            #{game_stats.seconds_taken.inspect}"
 puts "characters per second: #{game_stats.cps}"
 puts "num errors:            #{game_stats.num_errors}"

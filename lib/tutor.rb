@@ -22,16 +22,16 @@ class Timer
     @stop_time = Time.now
   end
 
-  def time_taken
+  def seconds_taken
     (@stop_time - @start_time).to_f
   end
 end
 
 class MockTimer
-  attr_accessor :time_taken
+  attr_accessor :seconds_taken
 
-  def initialize(time_taken)
-    self.time_taken = time_taken
+  def initialize(seconds_taken)
+    self.seconds_taken = seconds_taken
   end
 end
 
@@ -58,13 +58,12 @@ class GameStats
     target_string.size == input_string.size
   end
 
-  # TODO: rename this to seconds_taken
-  def time_taken
-    timer.time_taken
+  def seconds_taken
+    timer.seconds_taken
   end
 
   def cps
-    target_string.size / time_taken
+    target_string.size / seconds_taken
   end
 
   def num_errors
