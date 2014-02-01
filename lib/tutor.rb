@@ -1,3 +1,4 @@
+# TODO: Can we just get rid of game altogether?
 class Game
   attr_accessor :target_string, :user_input
 
@@ -67,6 +68,8 @@ class Character
   end
 end
 
+# TODO: no value in having the user_input object in GameStats
+# can we replace game with target_string and input_string?
 class GameStats
   def initialize(game: game, timer: timer)
     self.game  = game
@@ -74,7 +77,7 @@ class GameStats
   end
 
   def over?
-    target_size == actual_size
+    game.target_string.size == game.user_input.to_s.size
   end
 
   # TODO: rename this to seconds_taken
@@ -83,22 +86,17 @@ class GameStats
   end
 
   def cps
-    target_size / time_taken
+    game.target_string.size / time_taken
   end
 
   def num_errors
-    0 # TODO: probably need a real algorithm for this like... uhm, markov distane I think its called? (no internet right now to look it up)
+    # TODO: probably need a real algorithm for this like... uhm, markov distane I think its called? (no internet right now to look it up)
+    game.target_string.chars
+        .zip(game.user_input.to_s.chars)
+        .count { |c1, c2| c1 != c2 }
   end
 
   private
-
-  def target_size
-    game.target_string.size
-  end
-
-  def actual_size
-    game.user_input.to_s.size
-  end
 
   attr_accessor :game, :timer
 end
