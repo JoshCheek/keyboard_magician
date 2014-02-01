@@ -6,7 +6,7 @@ $LOAD_PATH.unshift File.expand_path '../../lib', __FILE__
 require 'interpret_character'
 require 'tutor'
 
-system "stty raw"
+system "stty raw" if $stdin.tty?
 
 begin
   target_string = 'abc def'
@@ -29,7 +29,7 @@ begin
 
   timer.stop
 ensure
-  system "stty -raw"
+  system "stty -raw" if $stdin.tty?
 end
 
 puts "Game Stats"
