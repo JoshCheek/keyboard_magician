@@ -8,23 +8,29 @@ require 'tutor'
 
 system "stty raw"
 
-game = Game.new target_string: 'abc def'
-timer = Timer.new
+begin
+  target_string = 'abc def'
+  timer         = Timer.new
+  user_input    = UserInput.new []
+  characters    = []
 
-timer.start
-game_stats = nil
+  timer.start
+  game_stats = nil
 
-loop do
-  game_stats = GameStats.new game: game, timer: timer
-  break if game_stats.over?
-  raw_char   = InterpretCharacter.call($stdin.getc)
-  character  = Character.new *raw_char
-  game       = game.user_enters character
+  loop do
+    game_stats = GameStats.new target_string: target_string,
+                               input_string:  user_input.to_s,
+                               timer:         timer
+    break if game_stats.over?
+    raw_char   = InterpretCharacter.call($stdin.getc)
+    characters << Character.new(*raw_char )
+    user_input = UserInput.new characters
+  end
+
+  timer.stop
+ensure
+  system "stty -raw"
 end
-
-timer.stop
-
-system "stty -raw"
 
 puts "Game Stats"
 puts "=========="

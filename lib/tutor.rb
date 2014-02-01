@@ -1,27 +1,6 @@
-# TODO: Can we just get rid of game altogether?
-class Game
-  attr_accessor :target_string, :user_input
-
-  def initialize(attributes={})
-    self.target_string = attributes[:target_string] || ''
-    self.user_input    = attributes[:user_input]    || UserInput.new([])
-  end
-
-  # TODO: can we get rid of this?
-  # it's not mutating, but it wishes it was
-  def user_enters(character)
-    Game.new target_string: target_string,
-             user_input:    user_input.push(character)
-  end
-end
-
 class UserInput
   def initialize(characters)
     self.characters = characters
-  end
-
-  def push(character)
-    self.class.new(characters + [character])
   end
 
   def to_s
@@ -68,16 +47,15 @@ class Character
   end
 end
 
-# TODO: no value in having the user_input object in GameStats
-# can we replace game with target_string and input_string?
 class GameStats
-  def initialize(game: game, timer: timer)
-    self.game  = game
-    self.timer = timer
+  def initialize(attributes)
+    self.target_string = attributes.fetch :target_string
+    self.input_string  = attributes.fetch :input_string
+    self.timer         = attributes.fetch :timer
   end
 
   def over?
-    game.target_string.size == game.user_input.to_s.size
+    target_string.size == input_string.size
   end
 
   # TODO: rename this to seconds_taken
@@ -86,17 +64,18 @@ class GameStats
   end
 
   def cps
-    game.target_string.size / time_taken
+    target_string.size / time_taken
   end
 
   def num_errors
     # TODO: probably need a real algorithm for this like... uhm, markov distane I think its called? (no internet right now to look it up)
-    game.target_string.chars
-        .zip(game.user_input.to_s.chars)
-        .count { |c1, c2| c1 != c2 }
+    target_string
+      .chars
+      .zip(input_string.chars)
+      .count { |c1, c2| c1 != c2 }
   end
 
   private
 
-  attr_accessor :game, :timer
+  attr_accessor :timer, :target_string, :input_string
 end

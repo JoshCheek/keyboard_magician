@@ -3,9 +3,14 @@ $LOAD_PATH.unshift File.expand_path '../../../lib', __FILE__
 require 'tutor'
 
 World Module.new {
-  attr_writer :game, :timer
-  def game
-    @game || raise("Accessing game before setting it")
+  attr_writer :timer, :user_input, :target_string
+
+  def user_input
+    @user_input ||= UserInput.new
+  end
+
+  def target_string
+    @target_string || ''
   end
 
   def timer
@@ -13,16 +18,16 @@ World Module.new {
   end
 
   def game_stats
-    GameStats.new(game: game, timer: timer)
+    GameStats.new target_string: target_string, input_string: user_input.to_s, timer: timer
   end
 }
 
 Given "I'm playing a simple game" do
-  self.game = Game.new
+  # no op
 end
 
 Given 'my target is "$target_string"' do |target_string|
-  game.target_string = target_string
+  self.target_string = target_string
 end
 
 Given "it takes me $time to play the game" do |raw_time|
@@ -30,12 +35,8 @@ Given "it takes me $time to play the game" do |raw_time|
 end
 
 When "I type the characters: $character_code" do |character_code|
-  characters = eval("[#{character_code}]")
-                 .map { |cs| Character.new *cs }
-
-  characters.each do |character|
-    self.game = game.user_enters character
-  end
+  characters      = eval("[#{character_code}]").map { |cs| Character.new *cs }
+  self.user_input = UserInput.new characters
 end
 
 Then 'the game is over' do
