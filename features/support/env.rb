@@ -41,7 +41,7 @@ Given "it takes me $time to play the game" do |raw_time|
 end
 
 When "I type the characters: $character_code" do |character_code|
-  self.characters += eval("[#{character_code}]").map { |cs| Character.new *cs }
+  self.characters += eval("[#{character_code}]").map { |cs| KeyboardMagician::Character.new *cs }
   self.user_input = UserInput.new characters
 end
 
