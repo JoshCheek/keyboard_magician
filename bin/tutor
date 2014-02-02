@@ -19,7 +19,7 @@ begin
     # probably moving the current char along, which will fix the cursor
     # and turn each input into a 1 or 2 character change instead of having
     # to rewrite the string each time
-    print KeyboardMagician::Output.new(target_string, user_input.to_s).map { |c, meaning|
+    print KeyboardMagician::Progress.new(target_string, user_input.to_s).map { |c, meaning|
       if meaning == :correct
         "\e[30;42m#{c}"
       elsif meaning == :incorrect

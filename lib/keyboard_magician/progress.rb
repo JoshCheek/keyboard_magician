@@ -1,5 +1,5 @@
 module KeyboardMagician
-  class Output
+  class Progress
     attr_accessor :target_string, :actual_string
 
     def initialize(target_string, actual_string)
