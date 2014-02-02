@@ -18,3 +18,11 @@ Feature: Simple game
     When I type the characters: [:a], [:x], [:c]
     Then the game is over
     And I have 1 errors
+
+  Scenario: Deleting a character
+    Given I'm playing a simple game
+    And my target is "abc"
+    When I type the characters: [:a], [:x], [:delete], [:b], [:c]
+    Then the game is over
+    And I have 0 errors
+

@@ -1,6 +1,30 @@
+class Character
+  attr_accessor :key, :metas
+  def initialize(key, *metas)
+    self.key   = key
+    self.metas = metas
+  end
+
+  def to_s
+    key.to_s
+  end
+
+  def delete?
+    key == :delete
+  end
+end
+
 class UserInput
   def initialize(characters)
-    self.characters = characters
+    _characters = []
+    characters.each do |character|
+      if character.delete?
+        _characters.pop
+      else
+        _characters << character
+      end
+    end
+    self.characters = _characters
   end
 
   def to_s
@@ -8,6 +32,7 @@ class UserInput
   end
 
   private
+
   attr_accessor :characters
 end
 
@@ -32,18 +57,6 @@ class MockTimer
 
   def initialize(seconds_taken)
     self.seconds_taken = seconds_taken
-  end
-end
-
-class Character
-  attr_accessor :key, :metas
-  def initialize(key, *metas)
-    self.key   = key
-    self.metas = metas
-  end
-
-  def to_s
-    key.to_s
   end
 end
 
