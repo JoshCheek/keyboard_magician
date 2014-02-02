@@ -23,10 +23,6 @@ World Module.new {
     @keys ||= []
   end
 
-  def progress
-    KeyboardMagician::Progress.new(target_string, user_input.to_s)
-  end
-
   def seconds_taken
     @seconds_taken || 1
   end
@@ -69,6 +65,7 @@ end
 
 Then 'the output shows:' do |table|
   expected = table.hashes.map { |h| [eval(h['character']), h['result'].intern] }
-  expect(progress.to_a).to eq expected
+  progress = KeyboardMagician::Progress.call(target_string, user_input.to_s)
+  expect(progress).to eq expected
 end
 

@@ -1,29 +1,21 @@
 module KeyboardMagician
-  class Progress
-    attr_accessor :target_string, :actual_string
+  module Progress
+    extend self
 
-    def initialize(target_string, actual_string)
-      self.target_string = target_string
-      self.actual_string = actual_string
-    end
-
-    include Enumerable
-
-    def each
-      return to_enum :each unless block_given?
-      target_string.each_char
-                   .zip(actual_string.each_char)
-                   .each { |target, actual|
-                     yield target, result(target, actual)
-                   }
-    end
-
-    private
-
-    def result(target_char, actual_char)
+    def self.result_for_chars(target_char, actual_char)
       return :correct     if target_char == actual_char
       return :incorrect   if actual_char
       return :unattempted
+    end
+
+    def self.call(target_string, actual_string)
+      progress_for(target_string, actual_string)
+    end
+
+    def progress_for(target_string, actual_string)
+      target_string.each_char
+                   .zip(actual_string.each_char)
+                   .map { |target, actual| [target, Progress.result_for_chars(target, actual)] }
     end
   end
 end
