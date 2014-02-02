@@ -12,6 +12,7 @@ describe KeyboardMagician::Console::ParseKey do
       *'a'..'z',
       *'A'..'Z',
       *'0'..'9',
+      " ",
       "'",
       *'`~!@#$%^&*()_+-=[]{}\\|;:"<>,./?œ∑´®†'.chars,
     ]

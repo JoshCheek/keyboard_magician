@@ -28,25 +28,25 @@ Feature: Simple game
     Given my target is "abc"
     When I press the keys: [:a]
     Then the output shows:
-    | character | meaning     |
+    | character | result      |
     | "a"       | correct     |
     | "b"       | unattempted |
     | "c"       | unattempted |
     When I press the keys: [:x]
     Then the output shows:
-    | character | meaning     |
+    | character | result      |
     | "a"       | correct     |
     | "b"       | incorrect   |
     | "c"       | unattempted |
     When I press the keys: [:delete]
     Then the output shows:
-    | character | meaning     |
+    | character | result      |
     | "a"       | correct     |
     | "b"       | unattempted |
     | "c"       | unattempted |
     When I press the keys: [:b], [:c]
     Then the output shows:
-    | character | meaning |
+    | character | result  |
     | "a"       | correct |
     | "b"       | correct |
     | "c"       | correct |

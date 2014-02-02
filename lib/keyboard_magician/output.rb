@@ -11,18 +11,19 @@ module KeyboardMagician
 
     def each
       return to_enum :each unless block_given?
-      target_string.chars
-                   .zip(actual_string.chars)
+      target_string.each_char
+                   .zip(actual_string.each_char)
                    .each { |target, actual|
-                     meaning = if target == actual
-                                 :correct
-                               elsif actual
-                                 :incorrect
-                               else
-                                 :unattempted
-                               end
-                     yield target, meaning
+                     yield target, result(target, actual)
                    }
+    end
+
+    private
+
+    def result(target_char, actual_char)
+      return :correct     if target_char == actual_char
+      return :incorrect   if actual_char
+      return :unattempted
     end
   end
 end

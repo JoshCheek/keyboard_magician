@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-# THIS IS ALL UNTESTED
 $LOAD_PATH.unshift File.expand_path '../../lib', __FILE__
 
 require 'keyboard_magician/console'
@@ -30,10 +29,9 @@ begin
       end
     }.join("")
     print "\r"
-    game_stats = KeyboardMagician::GameStats.new \
-      target_string: target_string,
-      input_string:  user_input.to_s,
-      seconds_taken: (Time.now-start_time).to_i
+    game_stats = KeyboardMagician::GameStats.new target_string: target_string,
+                                                 input_string:  user_input.to_s,
+                                                 seconds_taken: (Time.now-start_time).to_i
     break if game_stats.over?
     raw_char   = KeyboardMagician::Console::ParseKey.call($stdin.getc)
     keys       << KeyboardMagician::Key.new(*raw_char)

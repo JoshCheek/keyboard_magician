@@ -1,18 +1,20 @@
 module KeyboardMagician
   class UserInput
-    def initialize(characters)
-      _characters = []
-      characters.each do |character|
-        if character.delete?
-          _characters.pop
+    def initialize(keys)
+      characters = []
+      keys.each do |key|
+        if key.delete?
+          characters.pop
         else
-          _characters << character
+          characters.push key
         end
       end
-      self.characters = _characters
+      self.characters = characters
     end
 
     def to_s
+      # not sure its good to rely on to_s like this,
+      # meta-keys that we haven't accounted for come out all funky
       characters.map(&:to_s).join("")
     end
 
