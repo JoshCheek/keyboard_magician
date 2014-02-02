@@ -17,6 +17,11 @@ module KeyboardMagician
       target_string.size / seconds_taken
     end
 
+    def wpm
+      cpm = cps * 60
+      cpm / 5 # after doing math a few times, I'm pretty sure that Type Fu just considers every 5 characters to be a word
+    end
+
     def num_errors
       # TODO: probably need a real algorithm for this like... uhm, markov distane I think its called? (no internet right now to look it up)
       target_string

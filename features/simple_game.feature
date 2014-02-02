@@ -9,6 +9,7 @@ Feature: Simple game
     Then the game is over
     And it took me 5s to play the game
     And my cps is 1.4
+    And my wpm is 16.8
     And I have 0 errors
 
   Scenario: An error

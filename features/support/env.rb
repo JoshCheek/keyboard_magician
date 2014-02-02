@@ -59,6 +59,10 @@ And 'my cps is $cps' do |cps|
   expect(game_stats.cps).to eq cps.to_f
 end
 
+And 'my wpm is $wpm' do |wpm|
+  expect(game_stats.wpm).to eq wpm.to_f
+end
+
 And 'I have $n errors' do |num_errors|
   expect(game_stats.num_errors).to eq num_errors.to_i
 end
