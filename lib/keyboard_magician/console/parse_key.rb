@@ -1,12 +1,12 @@
 module KeyboardMagician
   module Console
-    module ParseCharacter
+    module ParseKey
       extend self
       def self.call(char)
-        parse_character char
+        parse_key char
       end
 
-      def parse_character(char)
+      def parse_key(char)
         return [:up    ] if char == "\e[A"
         return [:down  ] if char == "\e[B"
         return [:right ] if char == "\e[C"

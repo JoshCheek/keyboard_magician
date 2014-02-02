@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-require 'keyboard_magician/console/parse_character'
+require 'keyboard_magician/console/parse_key'
 
-describe KeyboardMagician::Console::ParseCharacter do
+describe KeyboardMagician::Console::ParseKey do
   def translate(char)
     described_class.call char
   end

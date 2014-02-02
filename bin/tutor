@@ -12,7 +12,7 @@ begin
   target_string = 'The quick brown fox jumped over the lazy dog.'
   start_time    = Time.now
   user_input    = KeyboardMagician::UserInput.new []
-  characters    = []
+  keys          = []
   game_stats    = nil
 
   loop do
@@ -35,9 +35,9 @@ begin
       input_string:  user_input.to_s,
       seconds_taken: (Time.now-start_time).to_i
     break if game_stats.over?
-    raw_char   = KeyboardMagician::Console::ParseCharacter.call($stdin.getc)
-    characters << KeyboardMagician::Character.new(*raw_char)
-    user_input = KeyboardMagician::UserInput.new characters
+    raw_char   = KeyboardMagician::Console::ParseKey.call($stdin.getc)
+    keys       << KeyboardMagician::Key.new(*raw_char)
+    user_input = KeyboardMagician::UserInput.new keys
   end
 ensure
   system "stty -raw" if $stdin.tty?

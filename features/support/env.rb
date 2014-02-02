@@ -3,7 +3,7 @@ $LOAD_PATH.unshift File.expand_path '../../../lib', __FILE__
 require 'keyboard_magician'
 
 World Module.new {
-  attr_writer :user_input, :target_string, :characters, :seconds_taken
+  attr_writer :user_input, :target_string, :keys, :seconds_taken
 
   def user_input
     @user_input ||= KeyboardMagician::UserInput.new
@@ -20,8 +20,8 @@ World Module.new {
       seconds_taken: seconds_taken
   end
 
-  def characters
-    @characters ||= []
+  def keys
+    @keys ||= []
   end
 
   def output
@@ -41,9 +41,9 @@ Given "it takes me $time to play the game" do |raw_time|
   self.seconds_taken = raw_time.to_f
 end
 
-When "I type the characters: $character_code" do |character_code|
-  self.characters += eval("[#{character_code}]").map { |cs| KeyboardMagician::Character.new *cs }
-  self.user_input = KeyboardMagician::UserInput.new characters
+When "I press the keys: $key_code" do |key_code|
+  self.keys += eval("[#{key_code}]").map { |cs| KeyboardMagician::Key.new *cs }
+  self.user_input = KeyboardMagician::UserInput.new keys
 end
 
 Then 'the game is over' do
