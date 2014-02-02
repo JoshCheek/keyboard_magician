@@ -3,7 +3,7 @@ $LOAD_PATH.unshift File.expand_path '../../../lib', __FILE__
 require 'tutor'
 
 World Module.new {
-  attr_writer :timer, :user_input, :target_string
+  attr_writer :timer, :user_input, :target_string, :characters
 
   def user_input
     @user_input ||= UserInput.new
@@ -20,6 +20,14 @@ World Module.new {
   def game_stats
     GameStats.new target_string: target_string, input_string: user_input.to_s, timer: timer
   end
+
+  def characters
+    @characters ||= []
+  end
+
+  def output
+    Output.new(target_string, user_input.to_s)
+  end
 }
 
 Given 'my target is "$target_string"' do |target_string|
@@ -31,7 +39,7 @@ Given "it takes me $time to play the game" do |raw_time|
 end
 
 When "I type the characters: $character_code" do |character_code|
-  characters      = eval("[#{character_code}]").map { |cs| Character.new *cs }
+  self.characters += eval("[#{character_code}]").map { |cs| Character.new *cs }
   self.user_input = UserInput.new characters
 end
 
@@ -50,5 +58,10 @@ end
 
 And 'I have $n errors' do |num_errors|
   expect(game_stats.num_errors).to eq num_errors.to_i
+end
+
+Then 'the output shows:' do |table|
+  expected = table.hashes.map { |h| [eval(h['character']), h['meaning'].intern] }
+  expect(output.to_a).to eq expected
 end
 

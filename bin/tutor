@@ -18,6 +18,20 @@ begin
   game_stats = nil
 
   loop do
+    # eventually, this should turn into something smarter
+    # probably moving the current char along, which will fix the cursor
+    # and turn each input into a 1 or 2 character change instead of having
+    # to rewrite the string each time
+    print Output.new(target_string, user_input.to_s).map { |c, meaning|
+      if meaning == :correct
+        "\e[30;42m#{c}"
+      elsif meaning == :incorrect
+        "\e[37;41m#{c}"
+      else
+        "\e[0m#{c}"
+      end
+    }.join("")
+    print "\r"
     game_stats = GameStats.new target_string: target_string,
                                input_string:  user_input.to_s,
                                timer:         timer
@@ -32,6 +46,7 @@ ensure
   system "stty -raw" if $stdin.tty?
 end
 
+puts "\e[0m"
 puts "Game Stats"
 puts "=========="
 puts "time taken:            #{game_stats.seconds_taken.inspect}"

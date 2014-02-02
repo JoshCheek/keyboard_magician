@@ -23,3 +23,29 @@ Feature: Simple game
     Then the game is over
     And I have 0 errors
 
+  Scenario: Printing progress
+    Given my target is "abc"
+    When I type the characters: [:a]
+    Then the output shows:
+    | character | meaning     |
+    | "a"       | correct     |
+    | "b"       | unattempted |
+    | "c"       | unattempted |
+    When I type the characters: [:x]
+    Then the output shows:
+    | character | meaning     |
+    | "a"       | correct     |
+    | "b"       | incorrect   |
+    | "c"       | unattempted |
+    When I type the characters: [:delete]
+    Then the output shows:
+    | character | meaning     |
+    | "a"       | correct     |
+    | "b"       | unattempted |
+    | "c"       | unattempted |
+    When I type the characters: [:b], [:c]
+    Then the output shows:
+    | character | meaning |
+    | "a"       | correct |
+    | "b"       | correct |
+    | "c"       | correct |
