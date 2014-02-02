@@ -26,7 +26,7 @@ begin
     print "\r"
     game_stats = GameStats.new target_string: target_string,
                                input_string:  user_input.to_s,
-                               seconds_taken: (Time.now-start_time).to_i
+                               seconds_taken: Time.now-start_time
     break if game_stats.over?
     raw_char   = Console::ParseKey.call($stdin.getc)
     keys       << Key.new(*raw_char)

@@ -14,7 +14,7 @@ module KeyboardMagician
     end
 
     def cps
-      target_string.size / seconds_taken
+      target_string.size / seconds_taken.to_f
     end
 
     def wpm

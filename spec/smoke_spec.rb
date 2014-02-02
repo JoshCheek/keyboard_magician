@@ -5,7 +5,7 @@ describe 'Hitting the binary just to make sure shit works' do
 
   it 'works' do
     input = 'The quick brown fox Xumped over the lazy dog.'
-    bin   = File.expand_path '../../bin/tutor', __FILE__
+    bin   = File.expand_path '../../bin/keyboard_magician', __FILE__
     invocation = Invocation.new *Open3.capture3(bin, stdin_data: input)
     expect(invocation.stderr).to eq String.new
     expect(invocation.stdout).to include "num errors:            1"
