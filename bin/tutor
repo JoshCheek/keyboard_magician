@@ -5,17 +5,16 @@ $LOAD_PATH.unshift File.expand_path '../../lib', __FILE__
 
 require 'interpret_character'
 require 'tutor'
+require 'time'
 
 system "stty raw" if $stdin.tty?
 
 begin
   target_string = 'abc def'
-  timer         = Timer.new
+  start_time    = Time.now
   user_input    = UserInput.new []
   characters    = []
-
-  timer.start
-  game_stats = nil
+  game_stats    = nil
 
   loop do
     # eventually, this should turn into something smarter
@@ -34,14 +33,12 @@ begin
     print "\r"
     game_stats = GameStats.new target_string: target_string,
                                input_string:  user_input.to_s,
-                               timer:         timer
+                               seconds_taken: (Time.now-start_time).to_i
     break if game_stats.over?
     raw_char   = InterpretCharacter.call($stdin.getc)
     characters << Character.new(*raw_char )
     user_input = UserInput.new characters
   end
-
-  timer.stop
 ensure
   system "stty -raw" if $stdin.tty?
 end

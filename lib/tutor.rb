@@ -63,43 +63,18 @@ class Output
   end
 end
 
-# UNTESTED
-require 'time'
-class Timer
-  def start
-    @start_time = Time.now
-  end
-
-  def stop
-    @stop_time = Time.now
-  end
-
-  def seconds_taken
-    (@stop_time - @start_time).to_f
-  end
-end
-
-class MockTimer
-  attr_accessor :seconds_taken
-
-  def initialize(seconds_taken)
-    self.seconds_taken = seconds_taken
-  end
-end
-
 class GameStats
+  attr_reader :seconds_taken
+
   def initialize(attributes)
     self.target_string = attributes.fetch :target_string
     self.input_string  = attributes.fetch :input_string
-    self.timer         = attributes.fetch :timer
+    self.seconds_taken = attributes.fetch :seconds_taken
+    self.seconds_taken = 0.01 if seconds_taken == 0
   end
 
   def over?
     target_string.size == input_string.size
-  end
-
-  def seconds_taken
-    timer.seconds_taken
   end
 
   def cps
@@ -116,5 +91,6 @@ class GameStats
 
   private
 
+  attr_writer   :seconds_taken
   attr_accessor :timer, :target_string, :input_string
 end

@@ -3,7 +3,7 @@ $LOAD_PATH.unshift File.expand_path '../../../lib', __FILE__
 require 'tutor'
 
 World Module.new {
-  attr_writer :timer, :user_input, :target_string, :characters
+  attr_writer :user_input, :target_string, :characters, :seconds_taken
 
   def user_input
     @user_input ||= UserInput.new
@@ -13,12 +13,10 @@ World Module.new {
     @target_string || ''
   end
 
-  def timer
-    @timer || MockTimer.new(1)
-  end
-
   def game_stats
-    GameStats.new target_string: target_string, input_string: user_input.to_s, timer: timer
+    GameStats.new target_string: target_string,
+                  input_string:  user_input.to_s,
+                  seconds_taken: seconds_taken
   end
 
   def characters
@@ -28,6 +26,10 @@ World Module.new {
   def output
     Output.new(target_string, user_input.to_s)
   end
+
+  def seconds_taken
+    @seconds_taken || 1
+  end
 }
 
 Given 'my target is "$target_string"' do |target_string|
@@ -35,7 +37,7 @@ Given 'my target is "$target_string"' do |target_string|
 end
 
 Given "it takes me $time to play the game" do |raw_time|
-  self.timer = MockTimer.new raw_time.to_f
+  self.seconds_taken = raw_time.to_f
 end
 
 When "I type the characters: $character_code" do |character_code|
