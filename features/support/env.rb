@@ -22,10 +22,6 @@ World Module.new {
   end
 }
 
-Given "I'm playing a simple game" do
-  # no op
-end
-
 Given 'my target is "$target_string"' do |target_string|
   self.target_string = target_string
 end

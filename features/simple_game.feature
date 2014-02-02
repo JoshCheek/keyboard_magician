@@ -3,8 +3,7 @@ Feature: Simple game
   We'll call this a simple game.
 
   Scenario: Type everything correctly
-    Given I'm playing a simple game
-    And my target is "abc def"
+    Given my target is "abc def"
     And it takes me 5s to play the game
     When I type the characters: [:a], [:b], [:c], [:" "], [:d], [:e], [:f]
     Then the game is over
@@ -13,15 +12,13 @@ Feature: Simple game
     And I have 0 errors
 
   Scenario: An error
-    Given I'm playing a simple game
-    And my target is "abc"
+    Given my target is "abc"
     When I type the characters: [:a], [:x], [:c]
     Then the game is over
     And I have 1 errors
 
   Scenario: Deleting a character
-    Given I'm playing a simple game
-    And my target is "abc"
+    Given my target is "abc"
     When I type the characters: [:a], [:x], [:delete], [:b], [:c]
     Then the game is over
     And I have 0 errors
