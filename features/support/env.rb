@@ -14,9 +14,10 @@ World Module.new {
   end
 
   def game_stats
-    GameStats.new target_string: target_string,
-                  input_string:  user_input.to_s,
-                  seconds_taken: seconds_taken
+    KeyboardMagician::GameStats.new \
+      target_string: target_string,
+      input_string:  user_input.to_s,
+      seconds_taken: seconds_taken
   end
 
   def characters
