@@ -11,7 +11,7 @@ system "stty raw" if $stdin.tty?
 begin
   target_string = 'abc def'
   start_time    = Time.now
-  user_input    = UserInput.new []
+  user_input    = KeyboardMagician::UserInput.new []
   characters    = []
   game_stats    = nil
 
@@ -36,7 +36,7 @@ begin
     break if game_stats.over?
     raw_char   = KeyboardMagician::Console::ParseCharacter.call($stdin.getc)
     characters << KeyboardMagician::Character.new(*raw_char)
-    user_input = UserInput.new characters
+    user_input = KeyboardMagician::UserInput.new characters
   end
 ensure
   system "stty -raw" if $stdin.tty?

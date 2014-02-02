@@ -6,7 +6,7 @@ World Module.new {
   attr_writer :user_input, :target_string, :characters, :seconds_taken
 
   def user_input
-    @user_input ||= UserInput.new
+    @user_input ||= KeyboardMagician::UserInput.new
   end
 
   def target_string
@@ -42,7 +42,7 @@ end
 
 When "I type the characters: $character_code" do |character_code|
   self.characters += eval("[#{character_code}]").map { |cs| KeyboardMagician::Character.new *cs }
-  self.user_input = UserInput.new characters
+  self.user_input = KeyboardMagician::UserInput.new characters
 end
 
 Then 'the game is over' do
