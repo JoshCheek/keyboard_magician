@@ -24,7 +24,7 @@ World Module.new {
   end
 
   def output
-    Output.new(target_string, user_input.to_s)
+    KeyboardMagician::Output.new(target_string, user_input.to_s)
   end
 
   def seconds_taken
