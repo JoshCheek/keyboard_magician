@@ -9,7 +9,7 @@ require 'time'
 system "stty raw" if $stdin.tty?
 
 begin
-  target_string = 'abc def'
+  target_string = 'The quick brown fox jumped over the lazy dog.'
   start_time    = Time.now
   user_input    = KeyboardMagician::UserInput.new []
   characters    = []
