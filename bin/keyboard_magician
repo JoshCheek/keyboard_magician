@@ -7,7 +7,10 @@ require 'time'
 
 include KeyboardMagician
 
-system "stty raw" if $stdin.tty?
+if $stdin.tty?
+  system "stty raw"   # feed characters straight through to the program
+  system "tput civis" # hide the cursor
+end
 
 begin
   target_string = 'The quick brown fox jumped over the lazy dog.'
@@ -33,7 +36,10 @@ begin
     user_input = UserInput.new keys
   end
 ensure
-  system "stty -raw" if $stdin.tty?
+  if $stdin.tty?
+    system "stty -raw"  # back to normal character processing
+    system "tput cnorm" # show the cursor
+  end
 end
 
 puts "\e[0m"
