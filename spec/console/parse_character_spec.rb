@@ -1,10 +1,10 @@
 # encoding: utf-8
 
-require 'interpret_character'
+require 'keyboard_magician/console/parse_character'
 
-describe InterpretCharacter do
+describe KeyboardMagician::Console::ParseCharacter do
   def translate(char)
-    InterpretCharacter.call char
+    described_class.call char
   end
 
   it 'translates inputs that can be represented as characters to their symbol' do
