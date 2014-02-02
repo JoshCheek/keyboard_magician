@@ -5,12 +5,14 @@ $LOAD_PATH.unshift File.expand_path '../../lib', __FILE__
 require 'keyboard_magician/console'
 require 'time'
 
+include KeyboardMagician
+
 system "stty raw" if $stdin.tty?
 
 begin
   target_string = 'The quick brown fox jumped over the lazy dog.'
   start_time    = Time.now
-  user_input    = KeyboardMagician::UserInput.new []
+  user_input    = UserInput.new []
   keys          = []
   game_stats    = nil
 
@@ -19,16 +21,16 @@ begin
     # probably moving the current char along, which will fix the cursor
     # and turn each input into a 1 or 2 character change instead of having
     # to rewrite the string each time
-    progress_ary = KeyboardMagician::Progress.call(target_string, user_input.to_s)
-    print KeyboardMagician::Console::ScreenProgress.call(progress_ary)
+    progress_ary = Progress.call(target_string, user_input.to_s)
+    print Console::ScreenProgress.call(progress_ary)
     print "\r"
-    game_stats = KeyboardMagician::GameStats.new target_string: target_string,
-                                                 input_string:  user_input.to_s,
-                                                 seconds_taken: (Time.now-start_time).to_i
+    game_stats = GameStats.new target_string: target_string,
+                               input_string:  user_input.to_s,
+                               seconds_taken: (Time.now-start_time).to_i
     break if game_stats.over?
-    raw_char   = KeyboardMagician::Console::ParseKey.call($stdin.getc)
-    keys       << KeyboardMagician::Key.new(*raw_char)
-    user_input = KeyboardMagician::UserInput.new keys
+    raw_char   = Console::ParseKey.call($stdin.getc)
+    keys       << Key.new(*raw_char)
+    user_input = UserInput.new keys
   end
 ensure
   system "stty -raw" if $stdin.tty?
