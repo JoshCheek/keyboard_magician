@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift File.expand_path '../../../lib', __FILE__
 
-require 'tutor'
+require 'keyboard_magician'
 
 World Module.new {
   attr_writer :user_input, :target_string, :characters, :seconds_taken

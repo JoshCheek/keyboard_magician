@@ -4,7 +4,7 @@
 $LOAD_PATH.unshift File.expand_path '../../lib', __FILE__
 
 require 'interpret_character'
-require 'tutor'
+require 'keyboard_magician'
 require 'time'
 
 system "stty raw" if $stdin.tty?
@@ -36,7 +36,7 @@ begin
                                seconds_taken: (Time.now-start_time).to_i
     break if game_stats.over?
     raw_char   = InterpretCharacter.call($stdin.getc)
-    characters << Character.new(*raw_char )
+    characters << Character.new(*raw_char)
     user_input = UserInput.new characters
   end
 ensure
