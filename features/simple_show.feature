@@ -1,13 +1,13 @@
-Feature: Simple game
-  The intermediate form of playing this game is to type out sentences and shit.
-  We'll call this a simple game.
+Feature: Simple trick
+  A simple show is a show with one trick:
+  Write a single sentence correctly and quickly
 
   Scenario: Type everything correctly
     Given my target is "abc def"
-    And it takes me 5s to play the game
+    And it takes me 5s to perform the trick
     When I press the keys: [:a], [:b], [:c], [:" "], [:d], [:e], [:f]
-    Then the game is over
-    And it took me 5s to play the game
+    Then the trick is over
+    And it took me 5s to perform the trick
     And my cps is 1.4
     And my wpm is 16.8
     And I have 0 errors
@@ -15,13 +15,13 @@ Feature: Simple game
   Scenario: An error
     Given my target is "abc"
     When I press the keys: [:a], [:x], [:c]
-    Then the game is over
+    Then the trick is over
     And I have 1 errors
 
   Scenario: Fixing an error with delete
     Given my target is "abc"
     When I press the keys: [:a], [:x], [:delete], [:b], [:c]
-    Then the game is over
+    Then the trick is over
     And I have 0 errors
 
   Scenario: Printing progress

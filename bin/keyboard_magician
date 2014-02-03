@@ -17,7 +17,7 @@ begin
   start_time    = Time.now
   user_input    = UserInput.new []
   keys          = []
-  game_stats    = nil
+  trick_stats   = nil
 
   loop do
     # eventually, this should turn into something smarter
@@ -27,10 +27,10 @@ begin
     progress_ary = Progress.call(target_string, user_input.to_s)
     print Console::ScreenProgress.call(progress_ary)
     print "\r"
-    game_stats = GameStats.new target_string: target_string,
-                               input_string:  user_input.to_s,
-                               seconds_taken: Time.now-start_time
-    break if game_stats.over?
+    trick_stats = TrickStats.new target_string: target_string,
+                                 input_string:  user_input.to_s,
+                                 seconds_taken: Time.now-start_time
+    break if trick_stats.over?
     raw_char   = Console::ParseKey.call($stdin.getc)
     keys       << Key.new(*raw_char)
     user_input = UserInput.new keys
@@ -45,7 +45,7 @@ end
 puts "\e[0m"
 puts "Game Stats"
 puts "=========="
-puts "time taken:            #{game_stats.seconds_taken.inspect}"
-puts "characters per second: #{game_stats.cps}"
-puts "words per minute:      #{game_stats.wpm}"
-puts "num errors:            #{game_stats.num_errors}"
+puts "time taken:            #{trick_stats.seconds_taken.inspect}"
+puts "characters per second: #{trick_stats.cps}"
+puts "words per minute:      #{trick_stats.wpm}"
+puts "num errors:            #{trick_stats.num_errors}"

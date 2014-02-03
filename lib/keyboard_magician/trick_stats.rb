@@ -1,5 +1,5 @@
 module KeyboardMagician
-  class GameStats
+  class TrickStats
     attr_reader :seconds_taken
 
     def initialize(attributes)

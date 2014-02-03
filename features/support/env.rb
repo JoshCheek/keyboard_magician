@@ -13,10 +13,10 @@ World Module.new {
     @target_string || ''
   end
 
-  def game_stats
-    KeyboardMagician::GameStats.new target_string: target_string,
-                                    input_string:  user_input.to_s,
-                                    seconds_taken: seconds_taken
+  def trick_stats
+    KeyboardMagician::TrickStats.new target_string: target_string,
+                                     input_string:  user_input.to_s,
+                                     seconds_taken: seconds_taken
   end
 
   def keys
@@ -32,14 +32,14 @@ Given 'my target is "$target_string"' do |target_string|
   self.target_string = target_string
 end
 
-Given "it takes me $time to play the game" do |raw_time|
+Given "it takes me $time to perform the trick" do |raw_time|
   # currently expect raw_time to be a string like 5s
   self.seconds_taken = raw_time.to_f
 end
 
-Then 'it took me $time to play the game' do |raw_time|
+Then 'it took me $time to perform the trick' do |raw_time|
   # currently expect raw_time to be a string like 5s
-  expect(game_stats.seconds_taken).to eq raw_time.to_f
+  expect(trick_stats.seconds_taken).to eq raw_time.to_f
 end
 
 When "I press the keys: $key_code" do |key_code|
@@ -47,20 +47,20 @@ When "I press the keys: $key_code" do |key_code|
   self.user_input = KeyboardMagician::UserInput.new keys
 end
 
-Then 'the game is over' do
-  expect(game_stats).to be_over
+Then 'the trick is over' do
+  expect(trick_stats).to be_over
 end
 
 Then 'my cps is $cps' do |cps|
-  expect(game_stats.cps).to eq cps.to_f
+  expect(trick_stats.cps).to eq cps.to_f
 end
 
 Then 'my wpm is $wpm' do |wpm|
-  expect(game_stats.wpm).to eq wpm.to_f
+  expect(trick_stats.wpm).to eq wpm.to_f
 end
 
 Then 'I have $n errors' do |num_errors|
-  expect(game_stats.num_errors).to eq num_errors.to_i
+  expect(trick_stats.num_errors).to eq num_errors.to_i
 end
 
 Then 'the output shows:' do |table|
@@ -68,4 +68,3 @@ Then 'the output shows:' do |table|
   progress = KeyboardMagician::Progress.call(target_string, user_input.to_s)
   expect(progress).to eq expected
 end
-
